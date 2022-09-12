@@ -1,0 +1,228 @@
+/*SPRAWDZANIE CZY ISTNIEJE BAZA DANYCH 'employees' I USUWANIE JEJ */
+
+DROP DATABASE IF EXISTS 'employees';
+
+/*TWORZENIE BAZY DANYCH 'employees'*/
+
+CREATE DATABASE employees;
+
+/*UŻYCIE BAZY DANYCH 'employees'*/
+
+USE employees;
+
+/*------TWORZENIE TABEL------*/
+
+/*SPRAWDZANIE CZY ISTNIEJE I TWORZENIE TABELI `dzialy`*/
+
+DROP TABLE IF EXISTS dzialy;
+CREATE TABLE dzialy (
+     id_dzialu int NOT NULL AUTO_INCREMENT,
+     PRIMARY KEY (id_dzialu),
+     nazwa_dzialu varchar(20));
+
+/*SPRAWDZANIE CZY ISTNIEJE I TWORZENIE TABELI `stanowiska`*/
+
+DROP TABLE IF EXISTS stanowiska;
+CREATE TABLE stanowiska (
+    id_stanowiska int NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id_stanowiska),
+    nazwa_stanowiska varchar(20),
+    id_dzialu int,
+    FOREIGN KEY (id_dzialu) REFERENCES dzialy(id_dzialu));
+
+/*SPRAWDZANIE CZY ISTNIEJE I TWORZENIE TABELI `pracownicy`*/
+
+DROP TABLE IF EXISTS pracownicy;
+CREATE TABLE pracownicy (
+    id_pracownika int NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id_pracownika),
+    imie varchar(30),
+    nazwisko varchar(30),
+    nr_tel int,
+    id_stanowiska int,
+    FOREIGN KEY (id_stanowiska) REFERENCES stanowiska(id_stanowiska),
+    wynagrodzenie int);
+
+/*SPRAWDZANIE CZY ISTNIEJE I TWORZENIE TABELI `zatrudnienie`*/
+
+DROP TABLE IF EXISTS zatrudnienie;
+CREATE TABLE zatrudnienie (
+    id_pracownika int NOT NULL, 
+    data_od date,
+    data_do date,
+    status varchar(20),
+    FOREIGN KEY (id_pracownika) REFERENCES pracownicy(id_pracownika) ON DELETE CASCADE ON UPDATE CASCADE);
+
+/*SPRAWDZANIE CZY ISTNIEJE I TWORZENIE TABELI `pracownicy_historia`*/
+
+DROP TABLE IF EXISTS pracownicy_historia;
+CREATE TABLE pracownicy_historia (
+    id_pracownika_h int NOT NULL,
+    PRIMARY KEY (id_pracownika_h),
+    imie varchar(30),
+    nazwisko varchar(30), 
+    email varchar(30),
+    nr_tel int,
+    id_stanowiska int,
+    FOREIGN KEY (id_stanowiska) REFERENCES stanowiska(id_stanowiska),
+    wynagrodzenie int);
+
+/*SPRAWDZANIE CZY ISTNIEJE I TWORZENIE TABELI `zatrudnienie_historia`*/
+
+DROP TABLE IF EXISTS zatrudnienie_historia;
+CREATE TABLE zatrudnienie_historia (
+    id_pracownika_h int NOT NULL, 
+    data_od date,
+    data_do date,
+    status varchar(20),
+    FOREIGN KEY (id_pracownika_h) REFERENCES pracownicy_historia(id_pracownika_h) ON DELETE CASCADE ON UPDATE CASCADE);
+
+/*------UZUPEŁNIANIE TABEL PRZYKŁADOWYM ZESTAWEM DANYCH-----*/
+
+/*ZRZUT DANYCH TABELI `dzialy`*/
+
+INSERT INTO `dzialy` (`id_dzialu`, `nazwa_dzialu`) VALUES
+(1, 'Finanse'),
+(2, 'IT'),
+(3, 'Marketing'),
+(4, 'Sprzedaż'),
+(5, 'HR'),
+(6, 'Audyt'),
+(7, 'Prawny'),
+(8, 'Zarząd'),
+(9, 'Administracja'),
+(10, 'Consulting'),
+(11, 'Kontroling'),
+(12, 'Social Media'),
+(13, 'Kadry'),
+(14, 'Płace'),
+(15, 'Strategii');
+
+/*ZRZUT DANYCH TABELI `stanowiska`*/
+
+INSERT INTO `stanowiska` (`id_stanowiska`, `id_dzialu`, `nazwa_stanowiska`) VALUES
+(1, 1, 'Ksiegowa/y'),
+(2, 2, 'Programista'),
+(3, 3, 'Marketing Manager'),
+(4, 4, 'Media Sales Specialist'),
+(5, 5, 'HR Manager'),
+(6, 6, 'Audit consultant'),
+(7, 7, 'Adwokat'),
+(8, 8, 'CEO'),
+(9, 9, 'Administrator'),
+(10, 10, 'AMS Consultant'),
+(11, 11, 'Financial Controller'),
+(12, 12, 'SM Ninja'),
+(13, 13, 'HR Business Partner'),
+(14, 14, 'Asystent Płac'),
+(15, 15, 'Strategy Advisor');
+
+/*ZRZUT DANYCH TABELI `pracownicy`*/
+
+INSERT INTO `pracownicy` (`id_pracownika`, `imie`, `nazwisko`, `nr_tel`, `id_stanowiska`, `wynagrodzenie`) VALUES
+(1, 'Artur', 'Stankiewicz', 586452489, 1, 8000),
+(2, 'Karolina', 'Ceglewicz', 589654785, 2, 8000),
+(3, 'Janina', 'Kozioł-Leśniak', 246895214, 3, 8000),
+(4, 'Adam', 'Barcz', 847483647, 4, 8000),
+(5, 'Małgorzata', 'Dwojak', 235464622, 5, 8000),
+(6, 'Maria', 'Stanisławska', 365425464, 6, 8000),
+(7, 'Bartosz', 'Barkowski', 511454215, 7, 8000),
+(8, 'Karol', 'Arciewicz', 542214552, 8, 8000),
+(9, 'Zenon', 'Komski', 548652122, 9, 8000),
+(10, 'Sandra', 'Stanek', 525285422, 10, 8000),
+(11, 'Joanna', 'Fijałkowska', 865451646, 11, 8000),
+(12, 'Julia', 'Życińska', 326546498, 12, 8000),
+(13, 'Anna', 'Makarowska', 296512244, 13, 8000),
+(14, 'Ewa', 'Zygmuntowicz', 334146211, 14, 8000),
+(15, 'Paweł', 'Korelowski', 758965442, 15, 8000);
+
+/*ZRZUT DANYCH TABELI `zatrudnienie`*/
+
+INSERT INTO `zatrudnienie` (`id_pracownika`, `data_od`, `data_do`, STATUS) VALUES
+(1, '1999-12-11', '0000-00-00','TRWA' ),
+(2, '2015-05-25', '0000-00-00','TRWA'  ),
+(3, '1998-11-27', '0000-00-00','TRWA' ),
+(4, '2008-07-16', '0000-00-00','TRWA' ),
+(5, '2021-01-31', '0000-00-00','TRWA' ),
+(6, '1996-11-15', '0000-00-00','TRWA' ),
+(7, '2005-09-23', '0000-00-00','TRWA' ),
+(8, '2008-12-14', '0000-00-00','TRWA' ),
+(9, '2018-03-02', '0000-00-00','TRWA' ),
+(10, '2002-07-30', '0000-00-00','TRWA' ),
+(11, '2013-02-04', '0000-00-00','TRWA' ),
+(12, '2016-08-08', '0000-00-00','TRWA' ),
+(13, '2007-11-26', '0000-00-00','TRWA' ),
+(14, '2020-01-31', '0000-00-00','TRWA' ),
+(15, '2019-12-08', '0000-00-00','TRWA' );
+
+/*-----WIDOKI----*/
+
+/*WIDOK TWORZĄCY UNIKALNE ADRESY E-MAIL DLA PRACOWNIKÓW*/
+
+DROP VIEW IF EXISTS maile_pracowników; 
+CREATE VIEW maile_pracowników AS SELECT p.id_pracownika, p.imie, nazwisko, s.nazwa_stanowiska, d.nazwa_dzialu, CONCAT(imie, nazwisko,id_pracownika, '@dbms.com') AS email
+FROM pracownicy AS p, stanowiska AS s, dzialy AS d WHERE p.id_stanowiska=s.id_stanowiska AND s.id_dzialu=d.id_dzialu;
+
+/*WIDOK WYŚWIETLAJĄCY ILOŚĆ PEŁNYCH LAT ZATRUDNIENIA PRACOWNIKÓW*/
+
+DROP VIEW IF EXISTS ilosc_lat_zatrudnienia;
+CREATE VIEW ilosc_lat_zatrudnienia AS 
+SELECT id_pracownika, floor((DATEDIFF(now(), zatrudnienie.data_od))/365) AS ilosc_lat FROM zatrudnienie;
+
+/*WIDOK WYŚWIETLAJĄCY MIESIĘCZNE WYNAGRODZENIE, ROCZNE WYNAGRODZENIE ORAZ PREMIĘ ROCZNĄ NA PODSTAWIE*/
+/*MIESIĘCZNEGO WYNAGRODZENIA ORAZ ILOŚCI PRZEPRACOWANYCH LAT*/
+
+DROP VIEW IF EXISTS tabela_wynagrodzen;
+CREATE VIEW tabela_wynagrodzen AS
+SELECT p.id_pracownika, p.imie, p.nazwisko, p.wynagrodzenie AS wynagrodzenie_msc, 
+p.wynagrodzenie*12 AS wynagrodzenie_rocz, p.wynagrodzenie*12*0.05+ilz.ilosc_lat*100 AS premia_rocz, 
+p.wynagrodzenie*12+p.wynagrodzenie*12*0.05+ilz.ilosc_lat*100 total_wyn_rocz FROM pracownicy AS p, 
+ilosc_lat_zatrudnienia AS ilz 
+WHERE p.id_pracownika=ilz.id_pracownika;
+
+/*------PROCEDURY----*/
+
+/*PROCEDURA WYŚWIETLAJĄCA MIESIĘCZNE I ROCZNE WYNAGRODZENIE ORAZ ROCZNĄ PREMIĘ PRACOWNIKA ZA POMOCĄ id_pracownika*/
+
+DROP PROCEDURE IF EXISTS pokaz_wynagrodzenie;
+DELIMITER //
+CREATE PROCEDURE pokaz_wynagrodzenie (podaj_id_pracownika int(5))
+BEGIN
+SELECT * FROM tabela_wynagrodzen WHERE id_pracownika=@podaj_id_pracownika;
+END//
+DELIMITER ;
+
+/*PRZYKŁADOWE WYWOŁANIE PROCEDURY pokaz_wynagrodzenie*/
+
+/*SET @podaj_id_pracownika='2';*/
+/*CALL `pokaz_wynagrodzenie`(@podaj_id_pracownika);*/
+
+
+/*------WYZWALACZE-----*/
+
+/*PO DODANIU NOWEGO PRACOWNIKA DO TABELI 'pracownicy', WYZWALACZ UZUPEŁNIA W TABELI 'zatrudnienie'*/
+/*id_pracownika ORAZ DATĘ ZATRUDNIENIA PRZYJMUJĄC OBECNĄ DATĘ*/
+
+DROP TRIGGER IF EXISTS uzup_zatrudnienia;
+DELIMITER $$
+CREATE TRIGGER uzup_zatrudnienia AFTER INSERT ON pracownicy FOR EACH ROW
+BEGIN
+INSERT INTO zatrudnienie VALUES (NEW.id_pracownika, NOW(), '0000-00-00', 'TRWA' );
+END
+$$
+DELIMITER ;
+
+/*PO USUNIĘCIU PRACOWNIKA Z TABELI pracownicy, WYZWALACZ PRZENOSI DANE Z TABELI pracownicy DO*/
+/*TABELI pracownicy_historia, A TAKŻE PRZENOSI DANE Z TABELI zatrudnienie DO TABELI zatrudnienie_historia*/
+/*PRZY CZYM AKTUALIZUJE DATĘ ZAKOŃCZENIA ZATRUDNIENIA O PRZYJMUJĄC OBECNĄ DATĘ*/ 
+
+DROP TRIGGER IF EXISTS usun_pracownika;
+DELIMITER $$
+CREATE TRIGGER usun_pracownika BEFORE DELETE ON pracownicy FOR EACH ROW
+BEGIN
+INSERT INTO pracownicy_historia SELECT * FROM pracownicy WHERE id_pracownika=OLD.id_pracownika;
+INSERT INTO zatrudnienie_historia SELECT * FROM zatrudnienie WHERE id_pracownika=OLD.id_pracownika;
+UPDATE zatrudnienie_historia SET data_do=NOW(), status='USTAŁO' WHERE id_pracownika_h=OLD.id_pracownika;
+END
+$$
+DELIMITER ;
