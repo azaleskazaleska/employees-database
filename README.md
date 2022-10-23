@@ -1,5 +1,5 @@
 # employees-database
-Projekt prostej bazy danych na MySQL, przechowującej dane na temat pracowników, ich zatrudnienia oraz struktury firmy.
+Projekt bazy danych na MySQL, przechowującej dane na temat pracowników, ich zatrudnienia oraz struktury firmy.
 W bazie zostały dodane widoki oraz triggery, dzięki którym po dodaniu danych o nowym pracowniku, 
 automatycznie wygenerowany zostaje jego unikalny adres e-mail oraz zostają dodane informacje w 
 tabeli 'zatrudnienie' dotyczące okresu rozpoczęcia zatrudnienia. Kolejny trigger pozwala na automatyczne 
