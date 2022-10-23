@@ -6,3 +6,5 @@ tabeli 'zatrudnienie' dotyczące okresu rozpoczęcia zatrudnienia. Kolejny trigg
 gromadzenie danych byłych pracowników w tabeli 'zatrudnienie_historia' poprzez przypisanie daty zakończenia 
 zatrudnienia jako daty usunięcia pracownika z bazy. W bazie użyto również procedury pozwalającej na sprawne 
 pobieranie informacji na temat rocznych oraz miesięcznych wynagrodzeniach lub premiach pracowników.
+
+![employees_model](https://user-images.githubusercontent.com/111015415/197410078-a526f25f-7d31-49a9-b6d7-8a4ab4aed19a.png)
